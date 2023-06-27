@@ -26,16 +26,6 @@ function shuffle_json_data()
     // Encode the random element as JSON
     $response = json_encode($randomElement);
 
-    //Return the JSON response
-    $response;
-    // Return the shuffled data
-    // wp_send_json($response);
-
-    global $wpdb;
-
-    // Table name
-    $table_name = $wpdb->prefix . 'astrokit_users';
-
     // Form values
     $fullName = $_POST['fullName'];
     $email = $_POST['email'];
@@ -45,58 +35,65 @@ function shuffle_json_data()
     $country = $_POST['country'];
     $astrology = json_decode($response)->id;
     if (empty($fullName)) {
-        wp_send_json_error('Error : Field "<strong>Name</strong>" cannot be empty. Please enter a valid field name.');
+        wp_send_json_error(__('Error : Field "<strong>Name</strong>" cannot be empty. Please enter a valid field name.', ASTROKIT));
         exit;
     }
     if (empty($email)) {
-        wp_send_json_error('Error : Field "<strong>Email</strong>" cannot be empty. Please enter a valid field email.');
+        wp_send_json_error(__('Error : Field "<strong>Email</strong>" cannot be empty. Please enter a valid field email.', ASTROKIT));
         exit;
     } else {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             //Email is not valid
-            wp_send_json_error('Error : Pelase enter a valid "<strong>Email</strong>" address.');
+            wp_send_json_error(__('Error : Pelase enter a valid "<strong>Email</strong>" address.', ASTROKIT));
             exit;
         }
     }
     if (empty($birthdate)) {
-        wp_send_json_error('Error : Pelase set your "<strong>Birthdate</strong>".');
+        wp_send_json_error(__('Error : Pelase set your "<strong>Birthdate</strong>".', ASTROKIT));
         exit;
     }
     if (empty($city)) {
-        wp_send_json_error('Error : Field "<strong>City</strong>" cannot be empty. Please enter a valid field city.');
+        wp_send_json_error(__('Error : Field "<strong>City</strong>" cannot be empty. Please enter a valid field city.', ASTROKIT));
         exit;
     }
     if (empty($country)) {
-        wp_send_json_error('Error : Pelase select your "<strong>Country</strong>".');
+        wp_send_json_error(__('Error : Pelase select your "<strong>Country</strong>".', ASTROKIT));
         exit;
     }
-    // Insert data into the table
-    $data = array(
-        'name' => $fullName,
-        'email' => $email,
-        'gender' => $gender,
-        'birthdate' => $birthdate,
-        'city' => $city,
-        'country' => $country,
-        'astrology' => $astrology
-    );
 
-    $wpdb->insert($table_name, $data);
+    if (get_option('dbSave') == 'on') {
 
-    // Check if the data was successfully inserted
-    if ($wpdb->insert_id) {
-        // New row created successfully
-        $insert = array(
-            'success' => true,
-            'message' => 'New row created successfully.'
+        global $wpdb;
+
+        // Table name
+        $table_name = $wpdb->prefix . 'astrokit_users';
+        // Insert data into the table
+        $data = array(
+            'name' => $fullName,
+            'email' => $email,
+            'gender' => $gender,
+            'birthdate' => $birthdate,
+            'city' => $city,
+            'country' => $country,
+            'astrology' => $astrology
         );
-    } else {
-        // Failed to create new row
-        $insert = array(
-            'success' => false,
-            'message' => 'Failed to create new row.'
-        );
+        $wpdb->insert($table_name, $data);
+        // Check if the data was successfully inserted
+        if ($wpdb->insert_id) {
+            // New row created successfully
+            $insert = array(
+                'success' => true,
+                'message' => __('New row created successfully.', ASTROKIT)
+            );
+        } else {
+            // Failed to create new row
+            $insert = array(
+                'success' => false,
+                'message' => __('Failed to create new row.', ASTROKIT)
+            );
+        }
     }
+
     wp_send_json_success($response);
 }
 add_action('wp_ajax_astrokit_shuffle', 'shuffle_json_data');

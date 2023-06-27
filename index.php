@@ -4,7 +4,7 @@
  * Plugin Name: Astrokit
  * Plugin URI: https://asandev.com
  * Description: Astrokit plugin is the  mathematics of your life, derived from the calculations of your planetary positions to predict what the future holds for you.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Farid Teymouri
  * Author URI: https://asandev.com
  * Text Domain: asandev
@@ -16,7 +16,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-define('ASTROKIT_VERSION', '3.1.7');
+define('ASTROKIT_VERSION', '1.0.1');
 const ASTROKIT = "astrokit";
 // plugin_dir_path() returns the trailing slash!
 define('ASTROKIT_PLUGIN_DIR', plugin_dir_path(__FILE__));
