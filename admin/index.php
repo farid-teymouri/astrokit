@@ -12,7 +12,7 @@ add_action('admin_menu', function () {
 class AstrokitMenu
 {
     protected  $page_title, $menu_title, $capability, $callback, $icon_url;
-    public string $menu_slug;
+    public  $menu_slug;
     protected int $position;
     public function __construct($page_title, $menu_title, $capability, $menu_slug, $callback, $icon_url, $position = null)
     {
