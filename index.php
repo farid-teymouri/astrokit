@@ -31,7 +31,7 @@ if (version_compare(PHP_VERSION, '5.6', '<')) {
             unset($_GET['activate']);
         }
     }
-    function ASTROKIT_deactivate_self()
+    function astrokit_deactivate_self()
     {
         deactivate_plugins(plugin_basename(ASTROKIT_PLUGIN_FILE));
     }
