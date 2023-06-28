@@ -17,11 +17,28 @@ if (!defined('ABSPATH')) {
     exit;
 }
 define('ASTROKIT_VERSION', '1.0.1');
-const ASTROKIT = "astrokit";
+define('ASTROKIT', "astrokit");
 // plugin_dir_path() returns the trailing slash!
 define('ASTROKIT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ASTROKIT_PLUGIN_FILE', __FILE__);
 define('ASTROKIT_PLUGIN_URI', plugin_dir_url(__FILE__));
+// Bail early if attempting to run on non-supported php versions.
+if (version_compare(PHP_VERSION, '5.6', '<')) {
+    function astrokit_incompatible_admin_notice()
+    {
+        echo '<div class="error"><p>' . __('Astrokit requires PHP 5.6 (or higher) to function properly. Please upgrade PHP. The Plugin has been auto-deactivated.', ASTROKIT) . '</p></div>';
+        if (isset($_GET['activate'])) {
+            unset($_GET['activate']);
+        }
+    }
+    function ASTROKIT_deactivate_self()
+    {
+        deactivate_plugins(plugin_basename(ASTROKIT_PLUGIN_FILE));
+    }
+    add_action('admin_notices', 'astrokit_incompatible_admin_notice');
+    add_action('admin_init', 'astrokit_deactivate_self');
+    return;
+}
 // Get including functions.php
 file_exists($functions =  ASTROKIT_PLUGIN_DIR . 'functions.php') ? require_once $functions : false;
 /**
