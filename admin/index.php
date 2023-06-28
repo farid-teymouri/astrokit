@@ -13,7 +13,7 @@ class AstrokitMenu
 {
     protected  $page_title, $menu_title, $capability, $callback, $icon_url;
     public  $menu_slug;
-    protected int $position;
+    protected $position;
     public function __construct($page_title, $menu_title, $capability, $menu_slug, $callback, $icon_url, $position = null)
     {
         $this->page_title = $page_title;
