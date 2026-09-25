@@ -8,7 +8,7 @@ description:
   fa: "یک کیت PHP برای توسعه قالب و ابزارهای وردپرسی مرتبط با طالع‌بینی، با ساختار مدیریتی، قالب پیش‌فرض و assetهای رابط کاربری."
   en: "A PHP toolkit for developing WordPress themes and astrology-related tools, featuring an admin structure, default theme, and reusable UI assets."
 
-banner: "https://raw.githubusercontent.com/farid-teymouri/astrokit/main/assets/icon/astrokit.png"
+banner: null
 
 preview: null
 
